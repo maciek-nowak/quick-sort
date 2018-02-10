@@ -1,6 +1,7 @@
 package com.codecool.quicksort;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
@@ -30,31 +31,24 @@ public class QuickSort {
         randomizePivot(toSort, start, end);
 
         Integer pivot = toSort.get(start);
-        int m = start;
+        int left = start;
 
-        for (int k = start + 1; k <= end; k++) {
+        for (int right = start + 1; right <= end; right++) {
 
-            if (toSort.get(k) < pivot) {
-                m++;
-                Integer temp = toSort.get(m);
-                toSort.set(m, toSort.get(k));
-                toSort.set(k, temp);
+            if (toSort.get(right) < pivot) {
+                left++;
+                Collections.swap(toSort, left, right);
             }
+
         }
 
-        Integer temp = toSort.get(m);
-        toSort.set(m, pivot);
-        toSort.set(start, temp);
-
-        return m;
+        Collections.swap(toSort, left, start);
+        return left;
     }
 
     private void randomizePivot(List<Integer> toSort, int start, int end) {
         Random r = new Random();
         int randomIndex = r.nextInt(end - start + 1) + start;
-
-        Integer temp = toSort.get(start);
-        toSort.set(start, toSort.get(randomIndex));
-        toSort.set(randomIndex, temp);
+        Collections.swap(toSort, start, randomIndex);
     }
 }
